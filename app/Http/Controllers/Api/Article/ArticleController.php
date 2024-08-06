@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Article;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Article\ArticleRequest;
 use App\Http\Resources\Article\ArticleResource;
 use App\Repositories\Article\ArticleInterface;
 use Illuminate\Http\JsonResponse;
@@ -20,6 +21,7 @@ class ArticleController extends Controller
     public function __construct(
         protected ArticleInterface $articleRepository,
         protected string $dataKeys = 'articles',
+        protected string $dataKey = 'article'
     ) {
     }
 
@@ -46,9 +48,20 @@ class ArticleController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * 
+     * @param \App\Http\Requests\Article\ArticleRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(ArticleRequest $request): JsonResponse
     {
-        //
+        $article = $this->articleRepository->store($request);
+
+        return setResponse(
+            $this->setStatusCodeResponse(Response::HTTP_CREATED)
+                ->setMessageToResponse('CREATED')
+                ->appendDataToResponse([
+                        $this->dataKey => ArticleResource::make($article)
+                ])->response
+        );
     }
 }

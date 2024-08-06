@@ -41,4 +41,19 @@ class ArticleRepository implements ArticleInterface
             ->latest()
             ->get();
     }
+
+    /**
+     * Create Article
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @return \App\Models\Article\Article
+     */
+    public function store(Request $request): Article
+    {
+        $article = $this->model->create($request->toArray());
+        // Cache crated article
+        Cache::put($this->cacheKey . $article->id, $article, 60);
+
+        return $article;
+    }
 }
