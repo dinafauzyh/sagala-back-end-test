@@ -38,11 +38,9 @@ class ArticleController extends Controller
         return setResponse(
             $this->setStatusCodeResponse(Response::HTTP_OK)
                 ->setMessageToResponse('OK')
-                ->appendDataToResponse(
-                    [
-                        $this->dataKeys =>  ArticleResource::collection($articles)
-                    ]
-                )->response
+                ->appendDataToResponse([
+                    $this->dataKeys => ArticleResource::collection($articles)
+                ])->response
         );
     }
 
@@ -60,7 +58,7 @@ class ArticleController extends Controller
             $this->setStatusCodeResponse(Response::HTTP_CREATED)
                 ->setMessageToResponse('CREATED')
                 ->appendDataToResponse([
-                        $this->dataKey => ArticleResource::make($article)
+                    $this->dataKey => ArticleResource::make($article)
                 ])->response
         );
     }
