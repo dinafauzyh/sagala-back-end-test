@@ -9,7 +9,7 @@ This project use Repository Design Pattern for the coding style. So the flow cod
 ## Project Requirement
 - PHP 8.1 or newer
 - Laravel 10
-- Database postgreSQL
+- PostgreSQL
 
 
 ## Installation
