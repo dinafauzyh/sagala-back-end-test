@@ -17,7 +17,9 @@ class ArticleTest extends TestCase
     use RefreshDatabase, WithoutMiddleware;
 
     /**
-     * Get all articles test.
+     * Get all articles test
+     * 
+     * @return void
      */
     public function test_can_get_articles(): void
     { 
@@ -47,6 +49,37 @@ class ArticleTest extends TestCase
                             'created_at',
                             'updated_at'
                         ]
+                    ]
+                ]
+            ]);
+    }
+
+
+    /**
+     * Create article test
+     * 
+     * @return void
+     */
+    public function test_can_create_articles(): void
+    {
+        $response = $this->postJson('api/articles', [
+            'author' => 'John Doe',
+            'title' => 'Test Article',
+            'body' => 'This is content for test article'
+        ]);
+
+        $response->assertStatus(Response::HTTP_CREATED)
+            ->assertJsonStructure([
+                'status_code',
+                'message',
+                'data' => [
+                    'article' => [
+                        'id',
+                        'author',
+                        'title',
+                        'body',
+                        'created_at',
+                        'updated_at'
                     ]
                 ]
             ]);
